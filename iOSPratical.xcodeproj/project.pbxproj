@@ -16,6 +16,7 @@
 		0B5C611C2603D3C6005C6FB3 /* iOSPraticalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5C611B2603D3C6005C6FB3 /* iOSPraticalTests.swift */; };
 		0B5C61272603D3C7005C6FB3 /* iOSPraticalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5C61262603D3C7005C6FB3 /* iOSPraticalUITests.swift */; };
 		0B5C613C2603D46A005C6FB3 /* StartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5C613B2603D46A005C6FB3 /* StartViewController.swift */; };
+		0B5DAF54260D0F80006945DD /* TodoViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5DAF53260D0F80006945DD /* TodoViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		0B5C61262603D3C7005C6FB3 /* iOSPraticalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSPraticalUITests.swift; sourceTree = "<group>"; };
 		0B5C61282603D3C7005C6FB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B5C613B2603D46A005C6FB3 /* StartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartViewController.swift; sourceTree = "<group>"; };
+		0B5DAF53260D0F80006945DD /* TodoViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +137,7 @@
 			isa = PBXGroup;
 			children = (
 				0B5C613B2603D46A005C6FB3 /* StartViewController.swift */,
+				0B5DAF53260D0F80006945DD /* TodoViewCell.swift */,
 			);
 			path = Feature;
 			sourceTree = "<group>";
@@ -271,6 +274,7 @@
 			files = (
 				0B5C61092603D3C3005C6FB3 /* ViewController.swift in Sources */,
 				0B5C613C2603D46A005C6FB3 /* StartViewController.swift in Sources */,
+				0B5DAF54260D0F80006945DD /* TodoViewCell.swift in Sources */,
 				0B5C61052603D3C3005C6FB3 /* AppDelegate.swift in Sources */,
 				0B5C61072603D3C3005C6FB3 /* SceneDelegate.swift in Sources */,
 			);
