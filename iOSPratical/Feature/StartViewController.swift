@@ -8,6 +8,8 @@
 import UIKit
 
 class StartViewController: UIViewController {
+    
+    var tasks: [(String, Bool)] = [("Lavar louça", true), ("Levar carro no mecânico", false), ("Comprar café", false)]
 
     let titleLabel: UILabel = UILabel()
 
@@ -23,16 +25,19 @@ class StartViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setup()
+        setupLabel()
         setupTable()
         titleLabel.text = "Seja bem vindo"
         view.backgroundColor = .white
 
         tableView.delegate = self
         tableView.dataSource = self
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(addTapped))
+        navigationItem.title = "TO DO LIST"
     }
 
-    func setup(){
+    func setupLabel(){
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(titleLabel)
         titleLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20).isActive = true
@@ -42,6 +47,11 @@ class StartViewController: UIViewController {
     }
 
     func setupTable() {
+        
+        tableView.backgroundColor = .clear
+        
+        tableView.separatorStyle = .none
+        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
 
@@ -55,19 +65,27 @@ class StartViewController: UIViewController {
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableView.automaticDimension
     }
+    
+    @objc func addTapped(){
+        self.navigationController?.present(ViewController(), animated: true)
+    }
 
 }
 
-extension StartViewController: UITableViewDelegate {}
+extension StartViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.navigationController?.present(ViewController(), animated: true)
+    }
+}
 
 extension StartViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        1
+        tasks.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell") as? TodoViewCell
-        cell?.configure(text: "Terminar a imagem", checked: false)
+        cell?.configure(text: tasks[indexPath.row].0, checked: tasks[indexPath.row].1)
         return cell ?? UITableViewCell()
     }
 

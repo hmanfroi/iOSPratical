@@ -11,12 +11,20 @@ class TodoViewCell: UITableViewCell {
 
     let taskLabel: UILabel = UILabel()
 
-    let imageStatus: UIImageView = UIImageView()
+    var imageStatus: UIImageView = UIImageView()
+    
+    var checkButton: UIButton = UIButton()
+    
+    let stackView = UIStackView()
+    
+    var checked: Bool = false
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        setupStackView()
+        //setupImageStatus()
         setupLabel()
-        setupImageStatus()
+        setupButton()
     }
 
     required init?(coder: NSCoder) {
@@ -24,30 +32,53 @@ class TodoViewCell: UITableViewCell {
     }
 
     func configure(text: String, checked: Bool) {
-        taskLabel.text = text
-
-        //TODO Update Image
+        self.checked = checked
+        checkButton.setImage(UIImage(systemName: "face.smiling"), for: .normal)
+        if checked {
+            checkButton.imageView?.tintColor = .systemGreen
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
+                attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+            taskLabel.attributedText = attributeString
+        } else {
+            checkButton.imageView?.tintColor = .lightGray
+            let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
+            taskLabel.attributedText = attributeString
+        }
+        
+        imageStatus.tintColor = .black
+    }
+    
+    func setupStackView() {
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.addSubview(stackView)
+        stackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
+        stackView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
     }
 
     func setupLabel() {
         taskLabel.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(taskLabel)
+        stackView.addSubview(taskLabel)
 
         taskLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
-        taskLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
-        taskLabel.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: 20).isActive = true
+        taskLabel.centerYAnchor.constraint(equalTo: stackView.centerYAnchor).isActive = true
     }
+    
+    func setupButton(){
+        checkButton.translatesAutoresizingMaskIntoConstraints = false
+        stackView.addSubview(checkButton)
 
-    func setupImageStatus() {
-        imageStatus.translatesAutoresizingMaskIntoConstraints = false
-        contentView.addSubview(imageStatus)
+        checkButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor).isActive = true
+        checkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
 
-        imageStatus.topAnchor.constraint(greaterThanOrEqualTo: contentView.topAnchor, constant: 20).isActive = true
-        imageStatus.centerYAnchor.constraint(equalTo: taskLabel.centerYAnchor).isActive = true
-        imageStatus.bottomAnchor.constraint(greaterThanOrEqualTo: contentView.bottomAnchor, constant: 20).isActive = true
-        imageStatus.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 20).isActive = true
-        imageStatus.leadingAnchor.constraint(lessThanOrEqualTo: taskLabel.trailingAnchor, constant: 20).isActive = true
-        imageStatus.widthAnchor.constraint(equalToConstant: 44).isActive = true
-        imageStatus.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        checkButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
+        checkButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
+        
+        checkButton.addTarget(self, action: #selector(checkButtonPressed), for: .touchUpInside)
+    }
+    
+    @objc func checkButtonPressed(){
+        self.configure(text: taskLabel.text ?? "", checked: !self.checked)
     }
 }
