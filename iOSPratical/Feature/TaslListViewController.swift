@@ -61,7 +61,7 @@ class TaslListViewController: UIViewController {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
 
-        tableView.register(TodoViewCell.self, forCellReuseIdentifier: "toDoCell")
+        tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: "toDoCell")
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableView.automaticDimension
     }
@@ -84,7 +84,7 @@ extension TaslListViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell") as? TodoViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell") as? TaskTableViewCell
         let task = viewModel.getTask(for: indexPath.row)
         cell?.configure(text: task.0, checked: task.1 )
         // Possivel melhoria para fazer na linha abaixo
