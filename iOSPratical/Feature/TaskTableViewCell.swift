@@ -7,11 +7,9 @@
 
 import UIKit
 
-class TodoViewCell: UITableViewCell {
+class TaskTableViewCell: UITableViewCell {
 
     let taskLabel: UILabel = UILabel()
-
-    var imageStatus: UIImageView = UIImageView()
     
     var checkButton: UIButton = UIButton()
     
@@ -22,7 +20,6 @@ class TodoViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         setupStackView()
-        //setupImageStatus()
         setupLabel()
         setupButton()
     }
@@ -44,8 +41,6 @@ class TodoViewCell: UITableViewCell {
             let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
             taskLabel.attributedText = attributeString
         }
-        
-        imageStatus.tintColor = .black
     }
     
     func setupStackView() {

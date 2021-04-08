@@ -7,9 +7,9 @@
 
 import UIKit
 
-class StartViewController: UIViewController {
+class TaslListViewController: UIViewController {
     
-    var tasks: [(String, Bool)] = [("Lavar louça", true), ("Levar carro no mecânico", false), ("Comprar café", false)]
+    var viewModel: TaskListViewModel = TaskListViewModel()
 
     let titleLabel: UILabel = UILabel()
 
@@ -72,20 +72,23 @@ class StartViewController: UIViewController {
 
 }
 
-extension StartViewController: UITableViewDelegate {
+extension TaslListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         self.navigationController?.present(ViewController(), animated: true)
     }
 }
 
-extension StartViewController: UITableViewDataSource {
+extension TaslListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tasks.count
+        viewModel.tasks.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell") as? TodoViewCell
-        cell?.configure(text: tasks[indexPath.row].0, checked: tasks[indexPath.row].1)
+        let task = viewModel.getTask(for: indexPath.row)
+        cell?.configure(text: task.0, checked: task.1 )
+        // Possivel melhoria para fazer na linha abaixo
+        //cell?.configure(text: viewModel.getTask(for: indexPath.row).0, checked: viewModel.getTask(for: indexPath.row).1 )
         return cell ?? UITableViewCell()
     }
 
