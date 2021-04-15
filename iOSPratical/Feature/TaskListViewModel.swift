@@ -6,18 +6,27 @@
 //
 
 import Foundation
+import RxSwift
 
 class TaskListViewModel {
     
-    var tasks: [Task] = [Task("Lavar louça", true), Task("Levar carro no mecânico", false), Task("Comprar café", false)]
+    var tasksList: Observable<[Task]>
     
-    func getTask(for row: Int) -> (String, Bool) {
-        let task = tasks[row]
-        return (task.taskText, task.taskDone)
+    let navigationTitle = "TO DO LIST"
+    
+    let title = "Seja bem vindo"
+    
+    
+//    func getTask(for row: Int) -> (String, Bool) {
+//        let task = MockTests().tasks[row]
+//        return (task.taskText, task.taskDone)
+//    }
+    
+//    func toggleTaskStatus(for index: Int){
+//        tasks[index].taskDone.toggle()
+//    }
+    
+    init() {
+        tasksList = Observable.just(MockTests().tasks)
     }
-    
-    func toggleTaskStatus(for index: Int){
-        tasks[index].taskDone.toggle()
-    }
-    
 }

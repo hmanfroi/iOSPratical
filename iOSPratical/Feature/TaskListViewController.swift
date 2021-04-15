@@ -6,14 +6,20 @@
 //
 
 import UIKit
+import RxSwift
+import RxDataSources
 
-class TaslListViewController: UIViewController {
+class TaskListViewController: UIViewController {
     
     var viewModel: TaskListViewModel = TaskListViewModel()
 
     let titleLabel: UILabel = UILabel()
 
     let tableView = UITableView()
+    
+    let disposeBag = DisposeBag()
+    
+    let reuseIdentifier = "toDoCell"
 
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -27,14 +33,14 @@ class TaslListViewController: UIViewController {
         super.viewDidLoad()
         setupLabel()
         setupTable()
-        titleLabel.text = "Seja bem vindo"
+        titleLabel.text = viewModel.title
         view.backgroundColor = .white
 
-        tableView.delegate = self
-        tableView.dataSource = self
-        
+//        tableView.delegate = self
+//        tableView.dataSource = self
+        binds()
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(addTapped))
-        navigationItem.title = "TO DO LIST"
+        navigationItem.title = viewModel.navigationTitle
     }
 
     func setupLabel(){
@@ -61,7 +67,7 @@ class TaslListViewController: UIViewController {
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0).isActive = true
 
-        tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: "toDoCell")
+        tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: reuseIdentifier)
         tableView.estimatedRowHeight = 120
         tableView.rowHeight = UITableView.automaticDimension
     }
@@ -70,26 +76,13 @@ class TaslListViewController: UIViewController {
         self.navigationController?.present(ViewController(), animated: true)
     }
 
-}
-
-extension TaslListViewController: UITableViewDelegate {
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.navigationController?.present(ViewController(), animated: true)
+    func binds() {
+        viewModel.tasksList.bind(to: tableView.rx.items(cellIdentifier: reuseIdentifier, cellType: TaskTableViewCell.self)) { row, event, cell in
+            let cellViewModel = CellViewModel(task: event)
+            cell.configure(cellViewModel: cellViewModel)
+            //cell.configure(text: event.taskText, checked: event.taskDone)
+        }
+        .disposed(by: disposeBag)
+        
     }
-}
-
-extension TaslListViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.tasks.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell") as? TaskTableViewCell
-        let task = viewModel.getTask(for: indexPath.row)
-        cell?.configure(text: task.0, checked: task.1 )
-        // Possivel melhoria para fazer na linha abaixo
-        //cell?.configure(text: viewModel.getTask(for: indexPath.row).0, checked: viewModel.getTask(for: indexPath.row).1 )
-        return cell ?? UITableViewCell()
-    }
-
 }
