@@ -78,30 +78,11 @@ class TaskListViewController: UIViewController {
 
     func binds() {
         viewModel.tasksList.bind(to: tableView.rx.items(cellIdentifier: reuseIdentifier, cellType: TaskTableViewCell.self)) { row, event, cell in
-            cell.configure(text: event.taskText, checked: event.taskDone)
+            let cellViewModel = CellViewModel(task: event)
+            cell.configure(cellViewModel: cellViewModel)
+            //cell.configure(text: event.taskText, checked: event.taskDone)
         }
         .disposed(by: disposeBag)
+        
     }
 }
-
-//extension TaskListViewController: UITableViewDelegate {
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        self.navigationController?.present(ViewController(), animated: true)
-//    }
-//}
-//
-//extension TaskListViewController: UITableViewDataSource {
-//    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        viewModel.tasks.count
-//    }
-//
-//    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "toDoCell") as? TaskTableViewCell
-//        let task = viewModel.getTask(for: indexPath.row)
-//        cell?.configure(text: task.0, checked: task.1 )
-//        // Possivel melhoria para fazer na linha abaixo
-//        //cell?.configure(text: viewModel.getTask(for: indexPath.row).0, checked: viewModel.getTask(for: indexPath.row).1 )
-//        return cell ?? UITableViewCell()
-//    }
-//
-//}
