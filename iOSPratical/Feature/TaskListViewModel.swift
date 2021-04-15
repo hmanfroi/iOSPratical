@@ -6,8 +6,15 @@
 //
 
 import Foundation
+import RxSwift
 
 class TaskListViewModel {
+    
+    var tasksList: Observable<[Task]>
+    
+    let navigationTitle = "TO DO LIST"
+    
+    let title = "Seja bem vindo"
     
     var tasks: [Task] = [Task("Lavar louça", true), Task("Levar carro no mecânico", false), Task("Comprar café", false)]
     
@@ -20,4 +27,7 @@ class TaskListViewModel {
         tasks[index].taskDone.toggle()
     }
     
+    init() {
+        tasksList = Observable.just(tasks)
+    }
 }
