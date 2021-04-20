@@ -14,7 +14,8 @@ final class TaskListViewController: UIViewController {
     var viewModel: TaskListViewModel
 
     let titleLabel: UILabel = UILabel()
-
+    let errorLabel: UILabel = UILabel()
+    
     let disposeBag = DisposeBag()
     
     private let tableView: UITableView = {
@@ -56,8 +57,6 @@ final class TaskListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupImageLaunch()
-        setStates()
-        viewModel.getTasks.onNext(())
     }
     
     private func setupImageLaunch(){
@@ -122,7 +121,7 @@ final class TaskListViewController: UIViewController {
     
     private func setStates(){
         viewModel.states
-            .drive(onNext: { state in
+            .drive(onNext: { [weak self] state in
                 switch state {
                 case .loading:
                     print("loading")
@@ -130,8 +129,18 @@ final class TaskListViewController: UIViewController {
                     print("showContent")
                 case .error:
                     print("error")
+                    self?.setupError()
                 }
             }).disposed(by: disposeBag)
+    }
+    
+    private func setupError() {
+        view.addSubview(errorLabel)
+        errorLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        errorLabel.text = "Opa, tivemos algum problema!"
+        errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+        errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
     
     private func animate(){
@@ -151,6 +160,8 @@ final class TaskListViewController: UIViewController {
         }, completion: { done in
             if done {
                 self.setupView()
+                self.setStates()
+                self.viewModel.getTasks.onNext(())
             }
         })
     }

@@ -38,10 +38,12 @@ final class TaskListViewModel {
                 guard let self = self else { return .empty() }
                 return TaskService().readTasks()
                     .do(onNext: {
-                        self.setTasks(model: $0 ?? [Task]())
+                        self.setTasks(model: $0)
                     })
                     .map { _ in TasksStates.showContent }
-                    .catch { _ in .just(TasksStates.error) }
+                    .catch{ error in
+                        .just(TasksStates.error)
+                    }
             }
         
         return Observable
