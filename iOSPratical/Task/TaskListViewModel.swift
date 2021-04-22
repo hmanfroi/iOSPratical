@@ -37,8 +37,8 @@ final class TaskListViewModel {
             .flatMapLatest { [weak self] () -> Observable<TasksStates> in
                 guard let self = self else { return .empty() }
                 return TaskService().readTasks()
-                    .do(onNext: {
-                        self.setTasks(model: $0)
+                    .do(onNext: { [weak self] in
+                        self?.setTasks(model: $0)
                     })
                     .map { _ in TasksStates.showContent }
                     .catch{ error in

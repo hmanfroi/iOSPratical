@@ -16,7 +16,6 @@ seria possível ajuste o layout (colocando contante negativa ou invertendo a ord
 
 - Adicionar final em classes para não serem extendidas 
 - Adicionar private em métodos de classes
-- O motivo de 
 
 4) Camada de serviço
 
@@ -28,4 +27,11 @@ seria possível ajuste o layout (colocando contante negativa ou invertendo a ord
 o método initAddTask não é chamado pelo fato que o coordinator já saiu da memória, e ao adicionar initAddTask na lista de captura sem apontar para o disposeBag da viewController, o nosso TaskCoordinator
 nunca é desalocado da memória.
 
+6) Passagem dos valores entre viewModel e cell
 
+- Vantagens e desvantagens do modelo atual
+- Questionar como o candidato faria
+
+7) Safe area no label do título na tela de adicionar tarefa
+
+8) Como você faria a persistência dos dados

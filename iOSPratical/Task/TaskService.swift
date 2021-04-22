@@ -36,12 +36,3 @@ final class TaskService {
     
 }
 
-extension ObservableType {
-    
-    public func mapArray<T: Codable>(type: T.Type, data: Data) throws -> Observable<[T]> {
-        let decoder = JSONDecoder()
-        let objects = try decoder.decode([T].self, from: data)
-        return Observable.just(objects)
-    }
-    
-}
