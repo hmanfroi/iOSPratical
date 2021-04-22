@@ -1,0 +1,45 @@
+[
+{
+    "taskText": "Lavar louça",
+    "taskDone": true
+},{
+    "taskText": "Limpar a casa",
+    "taskDone": false
+},{
+    "taskText": "Ir na academia",
+    "taskDone": true
+},{
+    "taskText": "Fazer o almoço",
+    "taskDone": false
+},{
+    "taskText": "Estudar",
+    "taskDone": true
+},{
+    "taskText": "Ler um livro",
+    "taskDone": false
+},{
+    "taskText": "Ir ao médico",
+    "taskDone": true
+},{
+    "taskText": "Estudar matemática",
+    "taskDone": false
+},{
+    "taskText": "Revisar matéria de química",
+    "taskDone": true
+},{
+    "taskText": "Ir ao mercado",
+    "taskDone": false
+},{
+    "taskText": "Carregar o celular",
+    "taskDone": true
+},{
+    "taskText": "Lavar a roupa",
+    "taskDone": false
+},{
+    "taskText": "Levar o carro na oficina",
+    "taskDone": true
+},{
+    "taskText": "Dar comida para o cachorro",
+    "taskDone": false
+}
+]
