@@ -5,57 +5,58 @@
 //  Created by Henrique Manfroi on 25/03/21.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 final class TaskTableViewCell: UITableViewCell {
-    
-    static let reuseIdentifier = "TaskTableViewCell"
 
-    var taskLabel: UILabel = UILabel()
-    
-    var checkButton: UIButton = UIButton()
-    
-    let stackView = UIStackView()
-    
-    let disposeBag = DisposeBag()
-    
-    var viewModel : CellViewModel?
-    
+    static let reuseIdentifier = String(describing: TaskTableViewCell.self)
+
+    private let taskLabel = UILabel()
+
+    private let checkButton = UIButton()
+
+    private let stackView = UIStackView()
+
+    private var disposeBag = DisposeBag()
+
     deinit {
-        print("Liberei TaskTableViewCell")
+        print("called \(String(describing: TaskTableViewCell.self)) deinit")
     }
-    
+
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
+    }
+
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         setupStackView()
         setupLabel()
         setupButton()
-        bindButton()
-        
     }
-    
+
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    func configure(cellViewModel: CellViewModel) {
-        viewModel = cellViewModel
-        let text = cellViewModel.task.taskText
-        let taskDone = cellViewModel.task.taskDone
-        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
-        if taskDone {
-            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
-        }
-        taskLabel.attributedText = attributeString
-        setImage(taskDone: taskDone)
-    }
-    
-    private func setImage(taskDone: Bool){
-        let imageName = taskDone ? "checked" : "unchecked"
-        checkButton.setImage(UIImage(named: imageName), for: .normal)
-        checkButton.imageView?.tintColor = taskDone ? .systemGreen : .black
+
+    func configure(viewModel: CellViewModel) {
+        viewModel.text
+            .drive(taskLabel.rx.attributedText)
+            .disposed(by: disposeBag)
+        viewModel.image
+            .drive(checkButton.rx.image(for: .normal))
+            .disposed(by: disposeBag)
+        viewModel.imageColor
+            .drive(checkButton.imageView!.rx.tintColor)
+            .disposed(by: disposeBag)
+        checkButton.rx.tap
+            .asDriver()
+            .drive(onNext: {
+                viewModel.tapAction()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setupStackView() {
@@ -74,7 +75,7 @@ final class TaskTableViewCell: UITableViewCell {
         taskLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20).isActive = true
         taskLabel.centerYAnchor.constraint(equalTo: stackView.centerYAnchor).isActive = true
     }
-    
+
     private func setupButton(){
         checkButton.translatesAutoresizingMaskIntoConstraints = false
         stackView.addSubview(checkButton)
@@ -84,17 +85,6 @@ final class TaskTableViewCell: UITableViewCell {
 
         checkButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
         checkButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-        
     }
-    
-    private func bindButton() {
-        checkButton.rx.tap
-            .asDriver()
-            .drive(onNext: { [weak self] _ in
-                guard let self = self else { return }
-//                self.viewModel?.changeData()
-            })
-            .disposed(by: disposeBag)
-    }
-    
+
 }

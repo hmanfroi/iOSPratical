@@ -6,9 +6,9 @@
 //
 
 import Foundation
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 final class TaskListViewModel {
     var tasksList = BehaviorRelay(value: [Task]())
@@ -22,11 +22,11 @@ final class TaskListViewModel {
     
     let navigationTitle = "Suas tarefas"
     let title = "Seja bem vindo"
-    
+
     deinit {
-        print("Liberei TaskListViewModel")
+        print("called \(String(describing: TaskListViewModel.self)) deinit")
     }
-    
+
     init() {
         states = initStates()
         routes = initRoutes()

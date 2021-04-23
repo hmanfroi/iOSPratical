@@ -103,24 +103,18 @@ final class TaskListViewController: UIViewController {
     }
 
     private func setupBinds() {
-        viewModel.tasksList.bind(to: tableView.rx.items(cellIdentifier: TaskTableViewCell.reuseIdentifier, cellType: TaskTableViewCell.self)) { [weak self] row, event, cell in
-            guard let self = self else { return }
-//            let cellViewModel = CellViewModel(task: event, index: row, viewModel: self.viewModel)
-            let action: ActionVoid = {
-//                event.taskDone.toggle()
+        viewModel.tasksList.bind(to: tableView.rx.items(cellIdentifier: TaskTableViewCell.reuseIdentifier, cellType: TaskTableViewCell.self)) { [weak self] row, _event, cell in
+            var event = _event
+            let action: (() -> Bool) = {
+                event.toggle()
+                self?.viewModel.itens[row] = event
+                self?.viewModel.tasksList.accept(self?.viewModel.itens ?? [])
+                return event.taskDone
             }
-            let cellViewModel = CellViewModel(task: event, index: row, action: action)
-            cell.configure(cellViewModel: cellViewModel)
+            let cellViewModel = CellViewModel(task: event, action: action)
+            cell.configure(viewModel: cellViewModel)
         }
         .disposed(by: disposeBag)
-        
-//        tableView.rx.itemSelected.subscribe(onNext: { [weak self] index in
-//            guard let self = self else { return }
-//            print("estou clicando")
-//            self.viewModel.itens[index.row].taskDone.toggle()
-//            self.viewModel.tasksList.accept(self.viewModel.itens)
-//        }).disposed(by: disposeBag)
-        
     }
     
     private func setStates(){

@@ -10,6 +10,10 @@ import Foundation
 struct Task: Decodable {
     var taskText: String
     var taskDone: Bool
+
+    mutating func toggle() {
+        taskDone.toggle()
+    }
 }
 
 extension Task {
@@ -17,8 +21,4 @@ extension Task {
         taskText = text
         taskDone = done
     }
-}
-
-struct MockTests {
-    var tasks: [Task] = [Task("Lavar louça", true), Task("Levar carro no mecânico", false), Task("Comprar café", false), Task("Lavar louça", true), Task("Levar carro no mecânico", false), Task("Comprar café", false), Task("Lavar louça", true), Task("Levar carro no mecânico", false), Task("Comprar café", false), Task("Lavar louça", true), Task("Levar carro no mecânico 7", false), Task("Comprar café 7", false), Task("Lavar louça 7", true), Task("Levar carro no mecânico 7", false), Task("Comprar café 8", false), Task("Lavar louça 8", true), Task("Levar carro no mecânico 8", false), Task("Comprar café 8", false), Task("Lavar louça 8", true), Task("Levar carro no mecânico 8", false), Task("Comprar café 8", true)]
 }
