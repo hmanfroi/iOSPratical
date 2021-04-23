@@ -10,8 +10,6 @@ import UIKit
 
 class AddTaskCoordinator: Coordinator {
     
-    //var childCoordinators = [Coordinator]()
-    
     var navigationController: UINavigationController
     
     init(navigationController: UINavigationController) {

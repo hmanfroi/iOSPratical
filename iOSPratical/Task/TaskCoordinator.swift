@@ -11,8 +11,6 @@ import UIKit
 
 class TaskCoordinator: Coordinator {
     
-    //var childCoordinators = [Coordinator]()
-    
     var navigationController: UINavigationController
     var dispose = DisposeBag()
     

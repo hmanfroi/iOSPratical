@@ -109,14 +109,6 @@ final class TaskListViewController: UIViewController {
             cell.configure(cellViewModel: cellViewModel)
         }
         .disposed(by: disposeBag)
-        
-//        tableView.rx.itemSelected.subscribe(onNext: { [weak self] index in
-//            guard let self = self else { return }
-//            print("estou clicando")
-//            self.viewModel.itens[index.row].taskDone.toggle()
-//            self.viewModel.tasksList.accept(self.viewModel.itens)
-//        }).disposed(by: disposeBag)
-        
     }
     
     private func setStates(){

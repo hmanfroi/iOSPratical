@@ -33,7 +33,7 @@ final class TaskListViewModel {
     }
     
     func initStates() -> Driver<TasksStates>{
-        let requestStatement = getTasks
+        let requestTasks = getTasks
             .flatMapLatest { [weak self] () -> Observable<TasksStates> in
                 guard let self = self else { return .empty() }
                 return TaskService().readTasks()
@@ -47,7 +47,7 @@ final class TaskListViewModel {
             }
         
         return Observable
-            .merge(requestStatement)
+            .merge(requestTasks)
             .asDriver(onErrorRecover: { _ in .never() })
     }
     
