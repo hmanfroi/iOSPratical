@@ -92,7 +92,7 @@ final class TaskTableViewCell: UITableViewCell {
             .asDriver()
             .drive(onNext: { [weak self] _ in
                 guard let self = self else { return }
-                self.viewModel?.changeData()
+                self.viewModel?.tapAction()
             })
             .disposed(by: disposeBag)
     }

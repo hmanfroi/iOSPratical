@@ -105,7 +105,10 @@ final class TaskListViewController: UIViewController {
     private func setupBinds() {
         viewModel.tasksList.bind(to: tableView.rx.items(cellIdentifier: TaskTableViewCell.reuseIdentifier, cellType: TaskTableViewCell.self)) { [weak self] row, event, cell in
             guard let self = self else { return }
-            let cellViewModel = CellViewModel(task: event, index: row, viewModel: self.viewModel)
+            let action: ActionVoid = { [weak self] in
+                self?.viewModel.changeTask(row: row)
+            }
+            let cellViewModel = CellViewModel(task: event, action: action)
             cell.configure(cellViewModel: cellViewModel)
         }
         .disposed(by: disposeBag)

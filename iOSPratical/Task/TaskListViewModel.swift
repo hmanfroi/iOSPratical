@@ -32,6 +32,17 @@ final class TaskListViewModel {
         routes = initRoutes()
     }
     
+    private func readTasks() -> Observable<TasksStates> {
+        return TaskService().readTasks()
+            .do(onNext: { [weak self] in
+                self?.setTasks(model: $0)
+            })
+            .map { _ in TasksStates.showContent }
+            .catch{ error in
+                .just(TasksStates.error)
+            }
+    }
+
     func initStates() -> Driver<TasksStates>{
         let requestTasks = getTasks
             .flatMapLatest { [weak self] () -> Observable<TasksStates> in
@@ -65,6 +76,11 @@ final class TaskListViewModel {
     
     private func setTasks(model: [Task]) {
         itens = model
+        tasksList.accept(itens)
+    }
+    
+    func changeTask(row: Int) {
+        itens[row].taskDone.toggle()
         tasksList.accept(itens)
     }
     
