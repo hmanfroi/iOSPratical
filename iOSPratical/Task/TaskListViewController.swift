@@ -112,7 +112,6 @@ final class TaskListViewController: UIViewController {
             cell.configure(cellViewModel: cellViewModel)
         }
         .disposed(by: disposeBag)
-        
     }
     
     private func setStates(){
