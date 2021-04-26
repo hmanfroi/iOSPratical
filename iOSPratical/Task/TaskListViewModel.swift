@@ -44,11 +44,21 @@ final class TaskListViewModel {
     }
 
     func initStates() -> Driver<TasksStates>{
-        let requestStatement = getTasks
-            .flatMapLatest(readTasks)
+        let requestTasks = getTasks
+            .flatMapLatest { [weak self] () -> Observable<TasksStates> in
+                guard let self = self else { return .empty() }
+                return TaskService().readTasks()
+                    .do(onNext: { [weak self] in
+                        self?.setTasks(model: $0)
+                    })
+                    .map { _ in TasksStates.showContent }
+                    .catch{ error in
+                        .just(TasksStates.error)
+                    }
+            }
         
         return Observable
-            .merge(requestStatement)
+            .merge(requestTasks)
             .asDriver(onErrorRecover: { _ in .never() })
     }
     
@@ -66,6 +76,11 @@ final class TaskListViewModel {
     
     private func setTasks(model: [Task]) {
         itens = model
+        tasksList.accept(itens)
+    }
+    
+    func changeTask(row: Int) {
+        itens[row].taskDone.toggle()
         tasksList.accept(itens)
     }
     
