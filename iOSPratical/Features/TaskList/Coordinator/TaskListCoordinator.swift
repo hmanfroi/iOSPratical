@@ -9,21 +9,27 @@ import Foundation
 import RxSwift
 import UIKit
 
-class TaskCoordinator: Coordinator {
-    
+final class TaskListCoordinator: Coordinator {
+
+    // MARK: - Internal Properties
+
     var navigationController: UINavigationController
-    var dispose = DisposeBag()
-    
+
+    // MARK: - Private Properties
+
+    private let viewModel = TaskListViewModel()
+
+    // MARK: - Initializers
+
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
     }
-    
+
     deinit {
-        print("liberei Coordinator")
+        print("called \(String(describing: TaskListCoordinator.self)) deinit")
     }
 
     func start() {
-        let viewModel = TaskListViewModel()
         let viewController = TaskListViewController(viewModel: viewModel)
 
         viewModel.routes
@@ -34,10 +40,13 @@ class TaskCoordinator: Coordinator {
 
         navigationController.pushViewController(viewController, animated: true)
     }
-    
-    
+
     func initAddTask() {
-        AddTaskCoordinator(navigationController: navigationController).start()
+        let coordinator = AddTaskCoordinator(
+            navigationController: navigationController,
+            taskList: viewModel.tasksList
+        )
+        coordinator.start()
     }
 }
 
