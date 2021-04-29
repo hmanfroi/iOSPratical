@@ -8,12 +8,16 @@
 import Foundation
 import RxSwift
 
-final class TaskService {
-    
-    deinit {
-        print("Liberei TaskService")
+final class TaskListService: TaskListServiceProtocol {
+    enum Errors: Error{
+        case invalidPath
+        case decodeError
     }
-    
+
+    deinit {
+        print("called \(String(describing: TaskListService.self)) deinit")
+    }
+
     func readTasks() -> Observable<[Task]> {
         if let url = Bundle.main.url(forResource: "tasks", withExtension: "json") {
             do {
@@ -28,11 +32,6 @@ final class TaskService {
         }
         return Observable.error(Errors.invalidPath)
     }
-    
-    enum Errors: Error{
-        case invalidPath
-        case decodeError
-    }
-    
+
 }
 

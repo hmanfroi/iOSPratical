@@ -10,20 +10,26 @@ import Foundation
 typealias ActionVoid = () -> ()
 
 final class CellViewModel {
-    
-    var task: Task
+
+    // MARK: - Internal Properties
+
+    let task: Task
+
+    // MARK: - Private Properties
+
     private let action: ActionVoid
-    
-    deinit {
-        print("Liberei CellViewModel")
-    }
-    
-    
+
+    // MARK: - Initializers
+
     init(task: Task, action: @escaping ActionVoid) {
         self.task = task
         self.action = action
     }
-    
+
+    deinit {
+        print("called \(String(describing: CellViewModel.self)) deinit")
+    }
+
 }
 
 extension CellViewModel {

@@ -5,19 +5,22 @@
 //  Created by Henrique Manfroi on 18/03/21.
 //
 
-import UIKit
 import RxSwift
-import RxDataSources
+import UIKit
 
 final class TaskListViewController: UIViewController {
-    
-    var viewModel: TaskListViewModel
 
-    let titleLabel: UILabel = UILabel()
-    let errorLabel: UILabel = UILabel()
-    
+    // MARK: - Internal Properties
+
     let disposeBag = DisposeBag()
-    
+
+    // MARK: - Private Properties
+
+    private let viewModel: TaskListViewModel
+
+    private let titleLabel = UILabel()
+    private let errorLabel = UILabel()
+
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.backgroundColor = .clear
@@ -27,45 +30,48 @@ final class TaskListViewController: UIViewController {
         tableView.rowHeight = UITableView.automaticDimension
         return tableView
     }()
-    
+
     private let imageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
         imageView.image = UIImage(named: "splash")
         imageView.tintColor = .primary
         return imageView
     }()
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        imageView.center = view.center
-        view.backgroundColor = .white
-    }
-    
-    deinit {
-        print("Liberei ViewController")
-    }
-    
+
+    // MARK: - Initializers
+
     init(viewModel: TaskListViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
     }
 
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
+    deinit {
+        print("called \(String(describing: TaskListViewController.self)) deinit")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupImageLaunch()
     }
-    
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        imageView.center = view.center
+        view.backgroundColor = .white
+    }
+
     private func setupImageLaunch(){
         view.addSubview(imageView)
         DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
             self.animate()
         })
     }
-    
+
     private func setupView(){
         setupLabel()
         setupTableView()
@@ -86,7 +92,6 @@ final class TaskListViewController: UIViewController {
     }
 
     private func setupTableView() {
-        
         tableView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(tableView)
 
@@ -113,7 +118,7 @@ final class TaskListViewController: UIViewController {
         }
         .disposed(by: disposeBag)
     }
-    
+
     private func setStates(){
         viewModel.states
             .drive(onNext: { [weak self] state in
@@ -128,16 +133,16 @@ final class TaskListViewController: UIViewController {
                 }
             }).disposed(by: disposeBag)
     }
-    
+
     private func setupError() {
         view.addSubview(errorLabel)
         errorLabel.translatesAutoresizingMaskIntoConstraints = false
-        
+
         errorLabel.text = "Opa, tivemos algum problema!"
         errorLabel.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
         errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
-    
+
     private func animate(){
         UIView.animate(withDuration: 1, animations: {
             let size = self.view.frame.size.width * 1.5
@@ -150,7 +155,7 @@ final class TaskListViewController: UIViewController {
                 width: size,
                 height: size
             )
-            
+
             self.imageView.alpha = 0
         }, completion: { done in
             if done {

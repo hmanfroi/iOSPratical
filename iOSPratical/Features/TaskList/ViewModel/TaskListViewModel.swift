@@ -6,34 +6,40 @@
 //
 
 import Foundation
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 final class TaskListViewModel {
-    var tasksList = BehaviorRelay(value: [Task]())
-    var itens = [Task]()
-    var activityIndicator = PublishSubject<Void>()
-    var getTasks = PublishSubject<Void>()
-    var addTaskRoute = PublishSubject<Void>()
-    
-    private(set) var states = Driver<TasksStates>.never()
-    private(set) var routes = Driver<TasksRoutes>.never()
-    
+
+    // MARK: - Internal Properties
+
+    let tasksList = BehaviorRelay(value: [Task]())
+
+    let getTasks = PublishSubject<Void>()
+    let addTaskRoute = PublishSubject<Void>()
+
     let navigationTitle = "Suas tarefas"
     let title = "Seja bem vindo"
-    
-    deinit {
-        print("Liberei TaskListViewModel")
-    }
-    
+
+    // MARK: - Private Properties
+
+    private(set) var states = Driver<TasksStates>.never()
+    private(set) var routes = Driver<TasksRoutes>.never()
+
+    // MARK: - Initializers
+
     init() {
         states = initStates()
         routes = initRoutes()
     }
-    
+
+    deinit {
+        print("called \(String(describing: TaskListViewModel.self)) deinit")
+    }
+
     private func readTasks() -> Observable<TasksStates> {
-        return TaskService().readTasks()
+        return TaskListService().readTasks()
             .do(onNext: { [weak self] in
                 self?.setTasks(model: $0)
             })
@@ -47,7 +53,7 @@ final class TaskListViewModel {
         let requestTasks = getTasks
             .flatMapLatest { [weak self] () -> Observable<TasksStates> in
                 guard let self = self else { return .empty() }
-                return TaskService().readTasks()
+                return TaskListService().readTasks()
                     .do(onNext: { [weak self] in
                         self?.setTasks(model: $0)
                     })
@@ -56,40 +62,40 @@ final class TaskListViewModel {
                         .just(TasksStates.error)
                     }
             }
-        
+
         return Observable
             .merge(requestTasks)
             .asDriver(onErrorRecover: { _ in .never() })
     }
-    
+
     func initRoutes() -> Driver<TasksRoutes>{
         let addTask = addTaskRoute
             .map { _ in
                 TasksRoutes.addTask
             }
             .asObservable()
-        
+
         return Observable
             .merge(addTask)
             .asDriver(onErrorRecover: { _ in .never() })
     }
-    
+
     private func setTasks(model: [Task]) {
-        itens = model
-        tasksList.accept(itens)
+        tasksList.accept(model)
     }
-    
+
     func changeTask(row: Int) {
-        itens[row].taskDone.toggle()
-        tasksList.accept(itens)
+        var list = tasksList.value
+        list[row].taskDone.toggle()
+        tasksList.accept(list)
     }
-    
+
     enum TasksStates {
         case loading
         case showContent
         case error
     }
-    
+
     enum TasksRoutes {
         case addTask
     }

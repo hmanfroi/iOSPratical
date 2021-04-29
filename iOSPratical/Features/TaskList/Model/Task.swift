@@ -13,7 +13,10 @@ struct Task: Decodable {
 }
 
 extension Task {
-    init(_ text: String, _ done: Bool){
+    init(
+        _ text: String,
+        _ done: Bool = false
+    ){
         taskText = text
         taskDone = done
     }
