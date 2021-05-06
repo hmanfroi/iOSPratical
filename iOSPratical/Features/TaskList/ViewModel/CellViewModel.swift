@@ -6,14 +6,20 @@
 //
 
 import Foundation
-
-typealias ActionVoid = () -> ()
+import RxCocoa
+import RxSwift
 
 final class CellViewModel {
 
+    struct Output {
+        let text: Driver<NSAttributedString?>
+        let image: Driver<UIImage?>
+        let imageColor: Driver<UIColor>
+    }
+
     // MARK: - Internal Properties
 
-    let task: Task
+    let output: Output
 
     // MARK: - Private Properties
 
@@ -22,8 +28,29 @@ final class CellViewModel {
     // MARK: - Initializers
 
     init(task: Task, action: @escaping ActionVoid) {
-        self.task = task
         self.action = action
+
+        let attributeString =  NSMutableAttributedString(string: task.taskText)
+        if task.taskDone {
+            attributeString.addAttribute(
+                NSAttributedString.Key.strikethroughStyle,
+                value: 2,
+                range: NSMakeRange(0, attributeString.length)
+            )
+        }
+        let text: Driver<NSAttributedString?> = .just(attributeString)
+
+        let imageChecked = UIImage(named: "checked")
+        let imageUnchecked = UIImage(named: "unchecked")
+        let image: Driver<UIImage?> = task.taskDone ? .just(imageChecked) : .just(imageUnchecked)
+
+        let imageColor: Driver<UIColor> = task.taskDone ? .just(.systemGreen) : .just(.black)
+
+        self.output = Output(
+            text: text,
+            image: image,
+            imageColor: imageColor
+        )
     }
 
     deinit {
