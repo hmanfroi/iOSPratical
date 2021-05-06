@@ -50,26 +50,40 @@ final class TaskListViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        print("called \(String(describing: TaskListViewController.self)) deinit")
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupImageLaunch()
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        imageView.center = view.center
+        setupImageView()
         view.backgroundColor = .white
     }
 
-    private func setupImageLaunch(){
+    private func setupImageView() {
+        imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
-        DispatchQueue.main.asyncAfter(deadline: .now()+0.5, execute: {
-            self.animate()
-        })
+        let height = imageView.heightAnchor.constraint(equalToConstant: 150)
+        let width = imageView.widthAnchor.constraint(equalToConstant: 150)
+
+        NSLayoutConstraint.activate([
+            height,
+            width,
+            imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            imageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+            UIView.animate(withDuration: 0.7, delay: 0, options: .curveEaseOut) {
+                height.constant *= 4
+                width.constant *= 4
+                self.view.layoutIfNeeded()
+            } completion: {
+                if $0 {
+                    self.imageView.removeFromSuperview()
+                    self.setupView()
+                    self.setStates()
+                    self.viewModel.getTasks.onNext(())
+                }
+            }
+        }
+        
     }
 
     private func setupView(){
@@ -143,26 +157,4 @@ final class TaskListViewController: UIViewController {
         errorLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
     }
 
-    private func animate(){
-        UIView.animate(withDuration: 1, animations: {
-            let size = self.view.frame.size.width * 1.5
-            let diffX = size - self.view.frame.size.width
-            let diffY = self.view.frame.size.height - size
-
-            self.imageView.frame = CGRect(
-                x: -(diffX/2),
-                y: diffY/2,
-                width: size,
-                height: size
-            )
-
-            self.imageView.alpha = 0
-        }, completion: { done in
-            if done {
-                self.setupView()
-                self.setStates()
-                self.viewModel.getTasks.onNext(())
-            }
-        })
-    }
 }

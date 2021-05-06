@@ -25,18 +25,15 @@ final class TaskListCoordinator: Coordinator {
         self.navigationController = navigationController
     }
 
-    deinit {
-        print("called \(String(describing: TaskListCoordinator.self)) deinit")
-    }
-
     func start() {
         let viewController = TaskListViewController(viewModel: viewModel)
 
         viewModel.routes
-        .filter { $0 == .addTask }
-        .drive(onNext: { [initAddTask] _ in
-            initAddTask()
-        }).disposed(by: viewController.disposeBag)
+            .filter { $0 == .addTask }
+            .drive(onNext: { [initAddTask] _ in
+                initAddTask()
+            })
+            .disposed(by: viewController.disposeBag)
 
         navigationController.pushViewController(viewController, animated: true)
     }
