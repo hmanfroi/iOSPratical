@@ -114,7 +114,7 @@ final class TaskListViewController: UIViewController {
                 self?.viewModel.changeTask(row: row)
             }
             let cellViewModel = CellViewModel(task: event, action: action)
-            cell.configure(cellViewModel: cellViewModel)
+            cell.configure(viewModel: cellViewModel)
         }
         .disposed(by: disposeBag)
     }

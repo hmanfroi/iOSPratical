@@ -5,9 +5,9 @@
 //  Created by Henrique Manfroi on 25/03/21.
 //
 
-import UIKit
-import RxSwift
 import RxCocoa
+import RxSwift
+import UIKit
 
 final class TaskTableViewCell: UITableViewCell {
 
@@ -17,9 +17,7 @@ final class TaskTableViewCell: UITableViewCell {
 
     // MARK: - Private Properties
 
-    private let disposeBag = DisposeBag()
-
-    private var viewModel: CellViewModel?
+    private var disposeBag = DisposeBag()
 
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
@@ -30,7 +28,6 @@ final class TaskTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
         setupLayout()
-        bindButton()
     }
 
     @available(*, unavailable)
@@ -42,28 +39,35 @@ final class TaskTableViewCell: UITableViewCell {
         print("called \(String(describing: TaskTableViewCell.self)) deinit")
     }
 
+    override func prepareForReuse() {
+        disposeBag = DisposeBag()
+    }
+
     private func setupLayout() {
         setupStackView()
         setupLabel()
         setupButton()
     }
 
-    func configure(cellViewModel: CellViewModel) {
-        viewModel = cellViewModel
-        let text = cellViewModel.task.taskText
-        let taskDone = cellViewModel.task.taskDone
-        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: text)
-        if taskDone {
-            attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+    func configure(viewModel: CellViewModel) {
+        let output = viewModel.output
+        output.text
+            .drive(titleLabel.rx.attributedText)
+            .disposed(by: disposeBag)
+        output.image
+            .drive(checkButton.rx.image(for: .normal))
+            .disposed(by: disposeBag)
+        if let imageView = checkButton.imageView {
+            output.imageColor
+                .drive(imageView.rx.tintColor)
+                .disposed(by: disposeBag)
         }
-        titleLabel.attributedText = attributeString
-        setImage(taskDone: taskDone)
-    }
-
-    private func setImage(taskDone: Bool){
-        let imageName = taskDone ? "checked" : "unchecked"
-        checkButton.setImage(UIImage(named: imageName), for: .normal)
-        checkButton.imageView?.tintColor = taskDone ? .systemGreen : .black
+        checkButton.rx.tap
+            .asDriver()
+            .drive(onNext: {
+                viewModel.tapAction()
+            })
+            .disposed(by: disposeBag)
     }
 
     private func setupStackView() {
@@ -92,16 +96,6 @@ final class TaskTableViewCell: UITableViewCell {
 
         checkButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
         checkButton.heightAnchor.constraint(equalToConstant: 44).isActive = true
-    }
-
-    private func bindButton() {
-        checkButton.rx.tap
-            .asDriver()
-            .drive(onNext: { [weak self] _ in
-                guard let self = self else { return }
-                self.viewModel?.tapAction()
-            })
-            .disposed(by: disposeBag)
     }
 
 }
