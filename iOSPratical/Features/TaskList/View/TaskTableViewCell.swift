@@ -35,10 +35,6 @@ final class TaskTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    deinit {
-        print("called \(String(describing: TaskTableViewCell.self)) deinit")
-    }
-
     override func prepareForReuse() {
         disposeBag = DisposeBag()
     }
@@ -55,10 +51,12 @@ final class TaskTableViewCell: UITableViewCell {
             .drive(titleLabel.rx.attributedText)
             .disposed(by: disposeBag)
         output.image
+            .map { UIImage(named: $0) }
             .drive(checkButton.rx.image(for: .normal))
             .disposed(by: disposeBag)
         if let imageView = checkButton.imageView {
             output.imageColor
+                .map { $0.valueColor }
                 .drive(imageView.rx.tintColor)
                 .disposed(by: disposeBag)
         }

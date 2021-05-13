@@ -18,6 +18,8 @@ final class TaskListViewController: UIViewController {
 
     private let viewModel: TaskListViewModel
 
+    let navRightButton = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: nil, action: nil)
+
     private let titleLabel = UILabel()
     private let errorLabel = UILabel()
 
@@ -91,7 +93,7 @@ final class TaskListViewController: UIViewController {
         setupTableView()
         setupBinds()
 
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: self, action: #selector(addTapped))
+        navigationItem.rightBarButtonItem = navRightButton
         navigationItem.title = viewModel.navigationTitle
     }
 
@@ -114,11 +116,6 @@ final class TaskListViewController: UIViewController {
 
         tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-
-    }
-    
-    @objc func addTapped(){
-        viewModel.addTaskRoute.onNext(())
     }
 
     private func setupBinds() {
@@ -131,6 +128,10 @@ final class TaskListViewController: UIViewController {
             cell.configure(viewModel: cellViewModel)
         }
         .disposed(by: disposeBag)
+
+        navRightButton.rx.tap
+            .bind(to: viewModel.addTaskRoute)
+            .disposed(by: disposeBag)
     }
 
     private func setStates(){

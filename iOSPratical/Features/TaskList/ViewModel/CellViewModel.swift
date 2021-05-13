@@ -13,8 +13,8 @@ final class CellViewModel {
 
     struct Output {
         let text: Driver<NSAttributedString?>
-        let image: Driver<UIImage?>
-        let imageColor: Driver<UIColor>
+        let image: Driver<String>
+        let imageColor: Driver<TDColors>
     }
 
     // MARK: - Internal Properties
@@ -40,21 +40,17 @@ final class CellViewModel {
         }
         let text: Driver<NSAttributedString?> = .just(attributeString)
 
-        let imageChecked = UIImage(named: "checked")
-        let imageUnchecked = UIImage(named: "unchecked")
-        let image: Driver<UIImage?> = task.taskDone ? .just(imageChecked) : .just(imageUnchecked)
+        let imageChecked = "checked"
+        let imageUnchecked = "unchecked"
+        let image: Driver<String> = task.taskDone ? .just(imageChecked) : .just(imageUnchecked)
 
-        let imageColor: Driver<UIColor> = task.taskDone ? .just(.systemGreen) : .just(.black)
+        let imageColor: Driver<TDColors> = task.taskDone ? .just(TDColors.green) : .just(TDColors.black)
 
         self.output = Output(
             text: text,
             image: image,
             imageColor: imageColor
         )
-    }
-
-    deinit {
-        print("called \(String(describing: CellViewModel.self)) deinit")
     }
 
 }
