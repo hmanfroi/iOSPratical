@@ -13,6 +13,9 @@ target 'iOSPratical' do
   target 'iOSPraticalTests' do
     inherit! :search_paths
     # Pods for testing
+    pod 'RxTest'
+    pod 'Quick'
+    pod 'Nimble'
   end
 
   target 'iOSPraticalUITests' do
