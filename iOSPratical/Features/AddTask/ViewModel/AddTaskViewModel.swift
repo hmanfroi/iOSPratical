@@ -9,7 +9,6 @@ import Foundation
 import RxCocoa
 import RxSwift
 
-
 final class AddTaskViewModel {
     struct Input {
         let title: PublishSubject<String?>
