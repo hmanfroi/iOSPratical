@@ -16,7 +16,7 @@ final class TaskListViewController: UIViewController {
 
     // MARK: - Private Properties
 
-    private let viewModel: TaskListViewModel
+    private let viewModel: TaskListViewModelProtocol
 
     let navRightButton = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: nil, action: nil)
 
