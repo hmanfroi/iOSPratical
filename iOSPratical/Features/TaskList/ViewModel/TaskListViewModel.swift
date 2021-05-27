@@ -52,10 +52,14 @@ final class TaskListViewModel: TaskListViewModelProtocol {
 
     private(set) var states = Driver<TasksStates>.never()
     private(set) var routes = Driver<TasksRoutes>.never()
+    
+    private let service: TaskListServiceProtocol
 
     // MARK: - Initializers
 
-    init() {
+    init(service: TaskListServiceProtocol = TaskListService()) {
+        self.service = service
+        
         states = initStates()
         routes = initRoutes()
     }
@@ -68,12 +72,12 @@ final class TaskListViewModel: TaskListViewModelProtocol {
         let requestTasks = getTasks
             .flatMapLatest { [weak self] () -> Observable<TasksStates> in
                 guard let self = self else { return .empty() }
-                return TaskListService().readTasks()
+                return self.service.readTasks()
                     .do(onNext: { [weak self] in
                         self?.setTasks(model: $0)
                     })
                     .map { _ in TasksStates.showContent }
-                    .catch{ error in
+                    .catch { error in
                         .just(TasksStates.error)
                     }
             }
@@ -99,17 +103,6 @@ final class TaskListViewModel: TaskListViewModelProtocol {
         var list = tasksList.value
         list[row].taskDone.toggle()
         tasksList.accept(list)
-    }
-    
-    private func readTasks() -> Observable<TasksStates> {
-        return TaskListService().readTasks()
-            .do(onNext: { [weak self] in
-                self?.setTasks(model: $0)
-            })
-            .map { _ in TasksStates.showContent }
-            .catch{ error in
-                .just(TasksStates.error)
-            }
     }
     
     private func setTasks(model: [Task]) {
