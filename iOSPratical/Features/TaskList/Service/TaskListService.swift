@@ -9,7 +9,7 @@ import Foundation
 import RxSwift
 
 final class TaskListService: TaskListServiceProtocol {
-    enum Errors: Error{
+    enum Errors: Error {
         case invalidPath
         case decodeError
     }

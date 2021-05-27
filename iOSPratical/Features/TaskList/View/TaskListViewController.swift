@@ -119,15 +119,20 @@ final class TaskListViewController: UIViewController {
     }
 
     private func setupBinds() {
-        viewModel.tasksList.bind(to: tableView.rx.items(cellIdentifier: TaskTableViewCell.reuseIdentifier, cellType: TaskTableViewCell.self)) { [weak self] row, event, cell in
-            guard let self = self else { return }
-            let action: ActionVoid = { [weak self] in
-                self?.viewModel.changeTask(row: row)
+        viewModel.tasksList
+            .bind(
+                to: tableView.rx.items(cellIdentifier: TaskTableViewCell.reuseIdentifier, cellType: TaskTableViewCell.self)
+            ){ [weak self] row, event, cell in
+                guard let self = self else { return }
+                
+                let action: ActionVoid = { [weak self] in
+                    self?.viewModel.changeTask(row: row)
+                }
+                
+                let cellViewModel = CellViewModel(task: event, action: action)
+                cell.configure(viewModel: cellViewModel)
             }
-            let cellViewModel = CellViewModel(task: event, action: action)
-            cell.configure(viewModel: cellViewModel)
-        }
-        .disposed(by: disposeBag)
+            .disposed(by: disposeBag)
 
         navRightButton.rx.tap
             .bind(to: viewModel.addTaskRoute)

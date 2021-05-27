@@ -10,7 +10,6 @@ import RxCocoa
 import RxSwift
 
 final class CellViewModel {
-
     struct Output {
         let text: Driver<NSAttributedString?>
         let image: Driver<String>
