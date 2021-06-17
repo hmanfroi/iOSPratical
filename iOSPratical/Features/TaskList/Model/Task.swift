@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Task: Decodable {
+struct Task: Decodable, Equatable {
     var taskText: String
     var taskDone: Bool
 }
