@@ -56,10 +56,32 @@ final class TaskListViewModelTests: QuickSpec {
                     
                     expect(observer.events).to(contain([.next(300, .showContent)]))
                 }
-                
             }
         }
         
+        context("quando for selecionada uma task") {
+            beforeEach {
+                self.setup()
+                
+                self.scheduler.createHotObservable([.next(300, ())])
+                    .bind(to: self.sut.getTasks)
+                    .disposed(by: self.disposeBag)
+                
+                self.scheduler.scheduleAt(500) { self.sut.changeTask(row: 0) }
+            }
+            
+            it("o estado da task deverá ser modificado") {
+                let _ = self.sut.states.drive().disposed(by: self.disposeBag)
+                
+                let observer = self.scheduler.start({ self.sut.tasksList.asObservable() })
+                
+                expect(observer.events)
+                    .to(contain([.next(300, [Task(taskText: "Teste", taskDone: false)])]))
+                
+                expect(observer.events)
+                    .to(contain([.next(500, [Task(taskText: "Teste", taskDone: true)])]))
+            }
+        }
     }
 }
 
