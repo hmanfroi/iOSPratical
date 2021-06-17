@@ -17,18 +17,12 @@ final class CellViewModel {
     }
 
     // MARK: - Internal Properties
-
+    
     let output: Output
-
-    // MARK: - Private Properties
-
-    private let action: ActionVoid
-
+    
     // MARK: - Initializers
 
-    init(task: Task, action: @escaping ActionVoid) {
-        self.action = action
-
+    init(task: Task) {
         let attributeString =  NSMutableAttributedString(string: task.taskText)
         if task.taskDone {
             attributeString.addAttribute(
@@ -44,18 +38,11 @@ final class CellViewModel {
         let image: Driver<String> = task.taskDone ? .just(imageChecked) : .just(imageUnchecked)
 
         let imageColor: Driver<TDColors> = task.taskDone ? .just(TDColors.green) : .just(TDColors.black)
-
+        
         self.output = Output(
             text: text,
             image: image,
             imageColor: imageColor
         )
-    }
-
-}
-
-extension CellViewModel {
-    var tapAction: ActionVoid {
-        return { [weak self] in self?.action() }
     }
 }

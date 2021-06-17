@@ -21,12 +21,13 @@ final class TaskTableViewCell: UITableViewCell {
 
     private let stackView = UIStackView()
     private let titleLabel = UILabel()
-    private let checkButton = UIButton()
+    private let checkButton = UIImageView()
 
     // MARK: - Initializers
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: .default, reuseIdentifier: reuseIdentifier)
+        self.selectionStyle = .none
         setupLayout()
     }
 
@@ -54,21 +55,12 @@ final class TaskTableViewCell: UITableViewCell {
         
         output.image
             .map { UIImage(named: $0) }
-            .drive(checkButton.rx.image(for: .normal))
+            .drive(checkButton.rx.image)
             .disposed(by: disposeBag)
         
-        if let imageView = checkButton.imageView {
-            output.imageColor
-                .map { $0.valueColor }
-                .drive(imageView.rx.tintColor)
-                .disposed(by: disposeBag)
-        }
-        
-        checkButton.rx.tap
-            .asDriver()
-            .drive(onNext: {
-                viewModel.tapAction()
-            })
+        output.imageColor
+            .map { $0.valueColor }
+            .drive(checkButton.rx.tintColor)
             .disposed(by: disposeBag)
     }
 

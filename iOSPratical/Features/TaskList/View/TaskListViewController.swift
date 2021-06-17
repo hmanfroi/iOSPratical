@@ -18,7 +18,12 @@ final class TaskListViewController: UIViewController {
 
     private let viewModel: TaskListViewModelProtocol
 
-    let navRightButton = UIBarButtonItem(image: UIImage(systemName: "plus.circle"), style: .plain, target: nil, action: nil)
+    let navRightButton = UIBarButtonItem(
+        image: UIImage(systemName: "plus.circle"),
+        style: .plain,
+        target: nil,
+        action: nil
+    )
 
     private let titleLabel = UILabel()
     private let errorLabel = UILabel()
@@ -85,7 +90,6 @@ final class TaskListViewController: UIViewController {
                 }
             }
         }
-        
     }
 
     private func setupView(){
@@ -120,18 +124,19 @@ final class TaskListViewController: UIViewController {
 
     private func setupBinds() {
         viewModel.tasksList
-            .bind(
-                to: tableView.rx.items(cellIdentifier: TaskTableViewCell.reuseIdentifier, cellType: TaskTableViewCell.self)
-            ){ [weak self] row, event, cell in
-                guard let self = self else { return }
-                
-                let action: ActionVoid = { [weak self] in
-                    self?.viewModel.changeTask(row: row)
-                }
-                
-                let cellViewModel = CellViewModel(task: event, action: action)
+            .bind(to: tableView.rx.items(
+                cellIdentifier: TaskTableViewCell.reuseIdentifier,
+                cellType: TaskTableViewCell.self
+            )) { row, task, cell in
+                let cellViewModel = CellViewModel(task: task)
                 cell.configure(viewModel: cellViewModel)
             }
+            .disposed(by: disposeBag)
+        
+        tableView.rx.itemSelected
+            .subscribe(onNext: { indexPath in
+                self.viewModel.changeTask(row: indexPath.row)
+            })
             .disposed(by: disposeBag)
 
         navRightButton.rx.tap

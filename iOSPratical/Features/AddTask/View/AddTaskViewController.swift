@@ -34,6 +34,7 @@ final class AddTaskViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+        
         setupTitleLabel()
         setupTaskTextField()
         setupTaskButton()
@@ -43,9 +44,11 @@ final class AddTaskViewController: UIViewController {
 
     private func bindInputs() {
         let input = viewModel.input
+        
         taskTextField.rx.text
             .bind(to: input.title)
             .disposed(by: disposeBag)
+        
         taskButton.rx.tap
             .bind(to: input.button)
             .disposed(by: disposeBag)
@@ -53,15 +56,19 @@ final class AddTaskViewController: UIViewController {
 
     private func bindOutputs() {
         let output = viewModel.output
+        
         output.title
             .drive(titleLabel.rx.text)
             .disposed(by: disposeBag)
+        
         output.textInputPlaceholder
             .drive(taskTextField.rx.placeholder)
             .disposed(by: disposeBag)
+        
         output.textInputText
             .drive(taskTextField.rx.text)
             .disposed(by: disposeBag)
+        
         output.buttonTitle
             .drive(taskButton.rx.title(for: .normal))
             .disposed(by: disposeBag)
