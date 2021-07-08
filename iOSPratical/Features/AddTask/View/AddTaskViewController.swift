@@ -10,9 +10,11 @@ import UIKit
 
 final class AddTaskViewController: UIViewController {
 
-    // MARK: - Private Properties
+    // MARK: Internal variables
 
-    private var disposeBag = DisposeBag()
+    var disposeBag = DisposeBag()
+
+    // MARK: - Private Properties
 
     private let viewModel: AddTaskViewModel
     private let titleLabel = UILabel()
@@ -63,10 +65,6 @@ final class AddTaskViewController: UIViewController {
         
         output.textInputPlaceholder
             .drive(taskTextField.rx.placeholder)
-            .disposed(by: disposeBag)
-        
-        output.textInputText
-            .drive(taskTextField.rx.text)
             .disposed(by: disposeBag)
         
         output.buttonTitle

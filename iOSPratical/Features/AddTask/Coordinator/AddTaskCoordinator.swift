@@ -8,6 +8,7 @@
 import Foundation
 import RxCocoa
 import UIKit
+import RxSwift
 
 final class AddTaskCoordinator: Coordinator {
 
@@ -35,6 +36,12 @@ final class AddTaskCoordinator: Coordinator {
         let viewController = AddTaskViewController(viewModel: viewModel)
 
         navigationController.pushViewController(viewController, animated: true)
+
+        viewModel.output.didAddTask
+            .drive(onNext: { [navigationController] _ in
+                navigationController.popViewController(animated: true)
+            })
+            .disposed(by: viewController.disposeBag)
     }
 
 }

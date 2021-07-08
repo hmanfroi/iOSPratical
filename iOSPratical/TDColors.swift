@@ -10,6 +10,7 @@ import UIKit
 enum TDColors {
     case green
     case black
+    case primary
 
     var valueColor: UIColor {
         switch self {
@@ -17,6 +18,8 @@ enum TDColors {
             return .systemGreen
         case .black:
             return .black
+        case .primary:
+            return UIColor(red: 0.20, green: 0.51, blue: 0.05, alpha: 1.00)
         }
     }
 }

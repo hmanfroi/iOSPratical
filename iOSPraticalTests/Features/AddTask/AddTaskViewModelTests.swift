@@ -40,7 +40,7 @@ final class AddTaskViewModelTests: QuickSpec {
                 beforeEach {
                     self.setup(taskList: taskList)
                     
-                    self.sut.output.textInputText.drive().disposed(by: self.disposeBag)
+                    self.sut.output.didAddTask.drive().disposed(by: self.disposeBag)
                     
                     self.scheduler.createHotObservable([.next(300, "Teste")])
                         .bind(to: self.sut.input.title)

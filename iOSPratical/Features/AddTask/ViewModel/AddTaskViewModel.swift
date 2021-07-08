@@ -17,7 +17,7 @@ final class AddTaskViewModel {
 
     struct Output {
         let title: Driver<String?>
-        let textInputText: Driver<String?>
+        let didAddTask: Driver<Void>
         let textInputPlaceholder: Driver<String?>
         let buttonTitle: Driver<String?>
     }
@@ -41,15 +41,14 @@ final class AddTaskViewModel {
         let textInputPlaceholder: Driver<String?> = .just("Título da tarefa")
         let buttonTitle: Driver<String?> = .just("Adicionar")
 
-        let taskText: Driver<String?> = buttonPublisher
+        let added: Driver<Void> = buttonPublisher
             .withLatestFrom(titlePublisher)
             .compactMap { $0 }
             .map { Task($0, false) }
             .do(onNext: {
                 addTask($0)
             })
-            .map { _ in "" }
-            .asDriver { _ in .never() }
+            .map { _ in () }.asDriver(onErrorDriveWith: .empty())
 
         self.input = Input(
             title: titlePublisher,
@@ -58,7 +57,7 @@ final class AddTaskViewModel {
 
         self.output = Output(
             title: title,
-            textInputText: taskText,
+            didAddTask: added,
             textInputPlaceholder: textInputPlaceholder,
             buttonTitle: buttonTitle
         )
