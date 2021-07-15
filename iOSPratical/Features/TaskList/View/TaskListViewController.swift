@@ -41,7 +41,7 @@ final class TaskListViewController: UIViewController {
     private let imageView: UIImageView = {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: 150, height: 150))
         imageView.image = UIImage(named: "splash")
-        imageView.tintColor = .primary
+        imageView.tintColor = TDColors.primary.valueColor
         return imageView
     }()
 
