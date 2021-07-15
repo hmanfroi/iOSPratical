@@ -39,3 +39,5 @@ nunca é desalocado da memória.
 9) Como trocar a cor da seleção da  célula. 
 
 10) Qual responsabilidade do coordinator?
+
+11) Como você faria o feed back de uma tarefa adicionada?
