@@ -1,9 +1,3 @@
-//
-//  StartViewController.swift
-//  iOSPratical
-//
-//  Created by Henrique Manfroi on 18/03/21.
-//
 
 import RxSwift
 import UIKit
@@ -146,7 +140,7 @@ final class TaskListViewController: UIViewController {
 
     private func setStates(){
         viewModel.states
-            .drive(onNext: { [weak self] state in
+            .drive(onNext: { state in
                 switch state {
                 case .loading:
                     print("loading")
@@ -154,7 +148,7 @@ final class TaskListViewController: UIViewController {
                     print("showContent")
                 case .error:
                     print("error")
-                    self?.setupError()
+                    self.setupError()
                 }
             }).disposed(by: disposeBag)
     }

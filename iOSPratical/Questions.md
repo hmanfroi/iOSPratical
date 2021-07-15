@@ -35,3 +35,7 @@ nunca é desalocado da memória.
 7) Safe area no label do título na tela de adicionar tarefa
 
 8) Como você faria a persistência dos dados
+
+9) Como trocar a cor da seleção da  célula. 
+
+10) Qual responsabilidade do coordinator?

@@ -1,9 +1,3 @@
-//
-//  AddTaskCoordinator.swift
-//  iOSPratical
-//
-//  Created by Lucas Saibt Real on 20/04/21.
-//
 
 import Foundation
 import RxCocoa
@@ -27,21 +21,17 @@ final class AddTaskCoordinator: Coordinator {
         self.taskList = taskList
     }
 
-    deinit {
-        print("called \(String(describing: AddTaskCoordinator.self)) deinit")
-    }
-
     func start() {
         let viewModel = AddTaskViewModel(taskList: taskList)
         let viewController = AddTaskViewController(viewModel: viewModel)
 
         navigationController.pushViewController(viewController, animated: true)
 
-        viewModel.output.didAddTask
-            .drive(onNext: { [navigationController] _ in
-                navigationController.popViewController(animated: true)
-            })
-            .disposed(by: viewController.disposeBag)
+//        viewModel.output.didAddTask
+//            .drive(onNext: { [navigationController] _ in
+//                navigationController.popViewController(animated: true)
+//            })
+//            .disposed(by: viewController.disposeBag)
     }
 
 }

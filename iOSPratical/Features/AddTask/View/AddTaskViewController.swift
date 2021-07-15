@@ -1,9 +1,3 @@
-//
-//  ViewController.swift
-//  iOSPratical
-//
-//  Created by Henrique Manfroi on 18/03/21.
-//
 
 import RxSwift
 import UIKit
@@ -59,9 +53,7 @@ final class AddTaskViewController: UIViewController {
     private func bindOutputs() {
         let output = viewModel.output
         
-        output.title
-            .drive(titleLabel.rx.text)
-            .disposed(by: disposeBag)
+        titleLabel.text = "Titulo errado"
         
         output.textInputPlaceholder
             .drive(taskTextField.rx.placeholder)
@@ -76,7 +68,7 @@ final class AddTaskViewController: UIViewController {
         view.addSubview(titleLabel)
 
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 74).isActive = true
+        titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: 20).isActive = true
         titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20).isActive = true
         titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 20).isActive = true
     }

@@ -1,9 +1,3 @@
-//
-//  TodoViewCell.swift
-//  iOSPratical
-//
-//  Created by Henrique Manfroi on 25/03/21.
-//
 
 import RxCocoa
 import RxSwift
@@ -34,10 +28,6 @@ final class TaskTableViewCell: UITableViewCell {
     @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
-    }
-
-    override func prepareForReuse() {
-        disposeBag = DisposeBag()
     }
 
     private func setupLayout() {
@@ -86,7 +76,7 @@ final class TaskTableViewCell: UITableViewCell {
         stackView.addSubview(checkButton)
 
         checkButton.centerYAnchor.constraint(equalTo: stackView.centerYAnchor).isActive = true
-        checkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20).isActive = true
+        checkButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 20).isActive = true
 
         checkButton.widthAnchor.constraint(equalToConstant: 44).isActive = true
         checkButton.heightAnchor.constraint(equalToConstant: 44).isActive = true

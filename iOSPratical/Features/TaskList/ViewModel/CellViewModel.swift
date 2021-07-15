@@ -1,9 +1,3 @@
-//
-//  CellViewModel.swift
-//  iOSPratical
-//
-//  Created by Felipe Bayer Weber on 15/04/21.
-//
 
 import Foundation
 import RxCocoa

@@ -1,9 +1,3 @@
-//
-//  TaskService.swift
-//  iOSPratical
-//
-//  Created by Lucas Saibt Real on 16/04/21.
-//
 
 import Foundation
 import RxSwift
@@ -12,10 +6,6 @@ final class TaskListService: TaskListServiceProtocol {
     enum Errors: Error {
         case invalidPath
         case decodeError
-    }
-
-    deinit {
-        print("called \(String(describing: TaskListService.self)) deinit")
     }
 
     func readTasks() -> Observable<[Task]> {

@@ -1,9 +1,3 @@
-//
-//  TaskListViewModel.swift
-//  iOSPratical
-//
-//  Created by Alexandre Bing on 08/04/21.
-//
 
 import Foundation
 import RxCocoa

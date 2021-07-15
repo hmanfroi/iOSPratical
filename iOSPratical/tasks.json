@@ -1,7 +1,7 @@
 [
 {
     "taskText": "Lavar louça",
-    "taskDone": true
+    "task": true
 },{
     "taskText": "Limpar a casa",
     "taskDone": false

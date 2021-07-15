@@ -1,13 +1,13 @@
-//
-//  Task.swift
-//  iOSPratical
-//
-//  Created by Alexandre Bing on 08/04/21.
-//
 
 import Foundation
 
 struct Task: Decodable, Equatable {
+    
+    internal init(taskText: String, taskDone: Bool) {
+        self.taskText = taskText
+        self.taskDone = taskDone
+    }
+    
     var taskText: String
     var taskDone: Bool
 }
