@@ -28,7 +28,7 @@ final class AddTaskViewModel {
         let buttonPublisher = PublishSubject<()>()
 
         let addTask: (Task) -> Void = {
-            taskList.accept(taskList.value + [$0])
+            taskList.accept([$0])
         }
 
         let title: Driver<String?> = .just("Adicionar uma tarefa")
@@ -55,9 +55,5 @@ final class AddTaskViewModel {
             textInputPlaceholder: textInputPlaceholder,
             buttonTitle: buttonTitle
         )
-    }
-
-    deinit {
-        print("called \(String(describing: AddTaskViewModel.self)) deinit")
     }
 }

@@ -58,10 +58,6 @@ final class TaskListViewModel: TaskListViewModelProtocol {
         routes = initRoutes()
     }
 
-    deinit {
-        print("called \(String(describing: TaskListViewModel.self)) deinit")
-    }
-
     func initStates() -> Driver<TasksStates>{
         let requestTasks = getTasks
             .flatMapLatest { [weak self] () -> Observable<TasksStates> in

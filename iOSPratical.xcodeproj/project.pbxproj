@@ -12,7 +12,6 @@
 		0B5C61092603D3C3005C6FB3 /* AddTaskViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5C61082603D3C3005C6FB3 /* AddTaskViewController.swift */; };
 		0B5C610E2603D3C6005C6FB3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B5C610D2603D3C6005C6FB3 /* Assets.xcassets */; };
 		0B5C61112603D3C6005C6FB3 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0B5C610F2603D3C6005C6FB3 /* LaunchScreen.storyboard */; };
-		0B5C611C2603D3C6005C6FB3 /* iOSPraticalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5C611B2603D3C6005C6FB3 /* iOSPraticalTests.swift */; };
 		0B5C61272603D3C7005C6FB3 /* iOSPraticalUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5C61262603D3C7005C6FB3 /* iOSPraticalUITests.swift */; };
 		0B5C613C2603D46A005C6FB3 /* TaskListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5C613B2603D46A005C6FB3 /* TaskListViewController.swift */; };
 		0B5DAF54260D0F80006945DD /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B5DAF53260D0F80006945DD /* TaskTableViewCell.swift */; };
@@ -65,7 +64,6 @@
 		0B5C61102603D3C6005C6FB3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0B5C61122603D3C6005C6FB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B5C61172603D3C6005C6FB3 /* iOSPraticalTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSPraticalTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0B5C611B2603D3C6005C6FB3 /* iOSPraticalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSPraticalTests.swift; sourceTree = "<group>"; };
 		0B5C611D2603D3C6005C6FB3 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0B5C61222603D3C6005C6FB3 /* iOSPraticalUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = iOSPraticalUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0B5C61262603D3C7005C6FB3 /* iOSPraticalUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSPraticalUITests.swift; sourceTree = "<group>"; };
@@ -168,7 +166,6 @@
 			isa = PBXGroup;
 			children = (
 				441DF9102656E30500CE017B /* Features */,
-				0B5C611B2603D3C6005C6FB3 /* iOSPraticalTests.swift */,
 				0B5C611D2603D3C6005C6FB3 /* Info.plist */,
 			);
 			path = iOSPraticalTests;
@@ -609,7 +606,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				44926BEC26601BBB003B8535 /* TaskListViewModelTests.swift in Sources */,
-				0B5C611C2603D3C6005C6FB3 /* iOSPraticalTests.swift in Sources */,
 				441DF9132656E35500CE017B /* AddTaskViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -41,3 +41,5 @@ nunca é desalocado da memória.
 10) Qual responsabilidade do coordinator?
 
 11) Como você faria o feed back de uma tarefa adicionada?
+
+12) Foi modifcado na AddTaskViewModel quando adiciona outro elemento agora substitui. Objetivo é o candidato corrigir o teste unitário.
