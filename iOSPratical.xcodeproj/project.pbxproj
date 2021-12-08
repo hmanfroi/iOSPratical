@@ -25,7 +25,6 @@
 		93207FB4261F82EA00178597 /* TaskListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93207FB3261F82EA00178597 /* TaskListViewModel.swift */; };
 		93207FB9261F834200178597 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93207FB8261F834200178597 /* Task.swift */; };
 		9A286DB3FE1722C704CFDB24 /* Pods_iOSPratical.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0CE99413B189F46D0B1C014 /* Pods_iOSPratical.framework */; };
-		A03423B2262F2253007A55D6 /* Questions.md in Resources */ = {isa = PBXBuildFile; fileRef = A03423B1262F2253007A55D6 /* Questions.md */; };
 		A03423BB262F3871007A55D6 /* AddTaskCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03423BA262F3871007A55D6 /* AddTaskCoordinator.swift */; };
 		A03423C6262F38C6007A55D6 /* AddTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A03423C5262F38C6007A55D6 /* AddTaskViewModel.swift */; };
 		A0443969262A1CB4002167DF /* TaskListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A0443968262A1CB4002167DF /* TaskListService.swift */; };
@@ -81,7 +80,6 @@
 		91F0698F263B4FF400B624ED /* TaskListServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListServiceProtocol.swift; sourceTree = "<group>"; };
 		93207FB3261F82EA00178597 /* TaskListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListViewModel.swift; sourceTree = "<group>"; };
 		93207FB8261F834200178597 /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
-		A03423B1262F2253007A55D6 /* Questions.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = Questions.md; sourceTree = "<group>"; };
 		A03423BA262F3871007A55D6 /* AddTaskCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskCoordinator.swift; sourceTree = "<group>"; };
 		A03423C5262F38C6007A55D6 /* AddTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTaskViewModel.swift; sourceTree = "<group>"; };
 		A0443968262A1CB4002167DF /* TaskListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListService.swift; sourceTree = "<group>"; };
@@ -146,7 +144,6 @@
 		0B5C61032603D3C3005C6FB3 /* iOSPratical */ = {
 			isa = PBXGroup;
 			children = (
-				A03423B1262F2253007A55D6 /* Questions.md */,
 				A053B71E262E0F0A00114BFA /* Extensions */,
 				91F06994263B509100B624ED /* Features */,
 				0B5C61042603D3C3005C6FB3 /* AppDelegate.swift */,
@@ -436,7 +433,6 @@
 			files = (
 				0B5C61112603D3C6005C6FB3 /* LaunchScreen.storyboard in Resources */,
 				A044397D262A21F2002167DF /* tasks.json in Resources */,
-				A03423B2262F2253007A55D6 /* Questions.md in Resources */,
 				0B5C610E2603D3C6005C6FB3 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
