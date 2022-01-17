@@ -1,11 +1,13 @@
 #Sugestões de questões
 
+Introdução, Contexto App de TO-DO List com lista, pode procurar na internet como resolver, se precisar com a tela.
+
 1) Quais gerenciadores de dependencia você conhece? Qual trabalhou? Qual a diferença entre o cocoapods, carthage, e swift package manager?
 
 2) Depois de tentar dar um build e o mesmo falhar. Por onde você começaria a investigar onde esta o bug?
 
 3) Camada de serviço
-- Quebrar o contrato no tasks.json e verificar como é debugado para encontrar o bug .
+- Quebrar o contrato no tasks.json e verificar como é debugado para encontrar o bug.
 
 4) Safe area no label do título na tela de adicionar tarefa.
 
@@ -19,7 +21,7 @@ seria possível ajuste o layout (colocando constante negativa ou invertendo a or
 
 7) Foi modifcado na AddTaskViewModel quando adiciona outro elemento agora substitui. Objetivo é o candidato corrigir o teste unitário.
 
-8) Como trocar a cor da seleção da  célula. 
+8) Como trocar a cor da seleção da célula.
 
 9) Como você faria o feed back de uma tarefa adicionada?
 
