@@ -144,7 +144,6 @@
 		0B5C61032603D3C3005C6FB3 /* iOSPratical */ = {
 			isa = PBXGroup;
 			children = (
-				A053B71E262E0F0A00114BFA /* Extensions */,
 				91F06994263B509100B624ED /* Features */,
 				0B5C61042603D3C3005C6FB3 /* AppDelegate.swift */,
 				0B5C61062603D3C3005C6FB3 /* SceneDelegate.swift */,
@@ -303,13 +302,6 @@
 				91F06997263B50EB00B624ED /* ViewModel */,
 			);
 			path = AddTask;
-			sourceTree = "<group>";
-		};
-		A053B71E262E0F0A00114BFA /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		B0538E8486B5937A1296C5C1 /* Frameworks */ = {

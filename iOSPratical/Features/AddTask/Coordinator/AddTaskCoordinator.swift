@@ -27,11 +27,11 @@ final class AddTaskCoordinator: Coordinator {
 
         navigationController.pushViewController(viewController, animated: true)
 
-//        viewModel.output.didAddTask
-//            .drive(onNext: { [navigationController] _ in
+        viewModel.output.didAddTask
+            .drive(onNext: { [navigationController] _ in
 //                navigationController.popViewController(animated: true)
-//            })
-//            .disposed(by: viewController.disposeBag)
+            })
+            .disposed(by: viewController.disposeBag)
     }
 
 }
